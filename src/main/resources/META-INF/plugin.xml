@@ -1,0 +1,42 @@
+<!-- Plugin Configuration File. Read more: https://plugins.jetbrains.com/docs/intellij/plugin-configuration-file.html -->
+<idea-plugin>
+    <!-- Unique identifier of the plugin. It should be FQN. It cannot be changed between the plugin versions. -->
+    <id>com.hackerguild.intellij-wexpr</id>
+
+    <!-- Public plugin name should be written in Title Case.
+         Guidelines: https://plugins.jetbrains.com/docs/marketplace/plugin-overview-page.html#plugin-name -->
+    <name>Wexpr</name>
+
+    <!-- A displayed Vendor name or Organization ID displayed on the Plugins Page. -->
+    <vendor email="thothonegan@hackerguild.com" url="https://www.hackerguild.com">Hackerguild</vendor>
+
+    <!-- Description of the plugin displayed on the Plugin Page and IDE Plugin Manager.
+         Simple HTML elements (text formatting, paragraphs, and lists) can be added inside of <![CDATA[ ]]> tag.
+         Guidelines: https://plugins.jetbrains.com/docs/marketplace/plugin-overview-page.html#plugin-description -->
+    <description><![CDATA[
+    Provides basic syntax support for wexpr file.
+  ]]></description>
+
+    <!-- Product and plugin compatibility requirements.
+         Read more: https://plugins.jetbrains.com/docs/intellij/plugin-compatibility.html -->
+    <depends>com.intellij.modules.platform</depends>
+
+    <!-- Extension points defined by the plugin.
+         Read more: https://plugins.jetbrains.com/docs/intellij/plugin-extension-points.html -->
+    <extensions defaultExtensionNs="com.intellij">
+        <fileType name="Wexpr File"
+                  implementationClass="com.hackerguild.intellijwexpr.WexprFileType"
+                  fieldName="Instance"
+                  language="Wexpr"
+                  extensions="wexpr" />
+        <lang.parserDefinition
+            language="Wexpr"
+            implementationClass="com.hackerguild.intellijwexpr.WexprParserDefinition" />
+
+        <lang.syntaxHighlighterFactory
+            language="Wexpr"
+            implementationClass="com.hackerguild.intellijwexpr.WexprSyntaxHighlighterFactory"
+            />
+
+    </extensions>
+</idea-plugin>

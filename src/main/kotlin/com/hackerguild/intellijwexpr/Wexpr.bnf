@@ -1,0 +1,57 @@
+{
+    parserClass = "com.hackerguild.intellijwexpr.WexprParser"
+    extends = "com.intellij.extapi.psi.ASTWrapperPsiElement"
+
+    psiClassPrefix="Wexpr"
+    psiImplClassSuffix="Implementation"
+    psiPackage="com.hackerguild.intellijwexpr.psi"
+    psiImplPackage="com.hackerguild.intellijwexpr.psi.impl"
+
+    elementTypeHolderClass="com.hackerguild.intellijwexpr.psi.WexprTypes"
+    elementTypeClass="com.hackerguild.intellijwexpr.psi.WexprElementType"
+    tokenTypeClass="com.hackerguild.intellijwexpr.psi.WexprTokenType"
+
+    tokens = [
+        NULL_LITERAL = "regexp:(null|nil)"
+        BARE_VALUE = "regexp:[^*\"#@();\[\]^<>\r\n \t]+"
+        QUOTED_VALUE = "regexp:\"(?:[^\"\\]|\\[rnt\"\\])*\""
+
+        REF_DECLARATION = "regexp:\[[A-Za-z_]+[A-Za-z0-9_]*]"
+        REF_INJECT = "regexp:\*\[[A-Za-z_]+[A-Za-z0-9_]*]"
+
+        WHITESPACE_STRING = "regexp:[\n\r\t ]*"
+
+        LINE_COMMENT = "regexp:;.*"
+        BLOCK_COMMENT = "regexp:;\(--[\s\S]*?--\)"
+    ]
+}
+
+//TestRoot ::= RefNamedExpression
+//SimpleArray ::= "#(" ")"
+
+FileRoot ::= OptWS ExpressionWithOptTrailingWS?
+
+private ExpressionWithOptTrailingWS ::= Expression OptWS
+
+Expression ::= RefNamedExpression | NormalExpression
+RefNamedExpression ::= ReferenceDeclaration OptWS Expression
+private NormalExpression ::= NULL_LITERAL | Value | Array | Map | BinaryData | ReferenceInject
+
+ReferenceDeclaration ::= REF_DECLARATION
+ReferenceInject ::= REF_INJECT
+
+Value ::= BARE_VALUE | QUOTED_VALUE
+
+BinaryData ::= BASE64_STRING
+
+Array ::= "#(" OptWS (ExpressionWithOptTrailingWS)* ")"
+Map ::= "@(" (OptWS MapKey OptWS ExpressionWithOptTrailingWS)* OptWS ")"
+MapKey ::= Value
+
+// BlockComment ::= ';(--' Any* '--)'
+
+
+private OptWS ::= WSChar*
+
+private WSChar ::= WHITESPACE_STRING | LINE_COMMENT | BLOCK_COMMENT
+
