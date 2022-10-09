@@ -37,6 +37,15 @@
             language="Wexpr"
             implementationClass="com.hackerguild.intellijwexpr.WexprSyntaxHighlighterFactory"
             />
+        <colorSettingsPage
+                implementation="com.hackerguild.intellijwexpr.WexprColorSettingsPage" />
+        <lang.psiStructureViewFactory
+            language="Wexpr"
+            implementationClass="com.hackerguild.intellijwexpr.WexprStructureViewFactory" />
+
+        <lang.commenter
+            language="Wexpr"
+            implementationClass="com.hackerguild.intellijwexpr.WexprCommenter" />
 
     </extensions>
 </idea-plugin>

@@ -33,7 +33,7 @@ FileRoot ::= OptWS ExpressionWithOptTrailingWS?
 
 private ExpressionWithOptTrailingWS ::= Expression OptWS
 
-Expression ::= RefNamedExpression | NormalExpression
+private Expression ::= RefNamedExpression | NormalExpression
 RefNamedExpression ::= ReferenceDeclaration OptWS Expression
 private NormalExpression ::= NULL_LITERAL | Value | Array | Map | BinaryData | ReferenceInject
 
@@ -45,7 +45,8 @@ Value ::= BARE_VALUE | QUOTED_VALUE
 BinaryData ::= BASE64_STRING
 
 Array ::= "#(" OptWS (ExpressionWithOptTrailingWS)* ")"
-Map ::= "@(" (OptWS MapKey OptWS ExpressionWithOptTrailingWS)* OptWS ")"
+Map ::= "@(" (OptWS MapKeyValue)* OptWS ")"
+MapKeyValue ::= MapKey OptWS ExpressionWithOptTrailingWS
 MapKey ::= Value
 
 // BlockComment ::= ';(--' Any* '--)'
