@@ -9,7 +9,7 @@ plugins {
 }
 
 group = "com.hackerguild"
-version = "0.0.1-DEV1"
+version = "0.0.1-DEV2"
 
 sourceSets["main"].java.srcDirs("src/main/gen")
 
@@ -68,7 +68,7 @@ tasks {
 
     patchPluginXml {
         sinceBuild.set("213")
-        untilBuild.set("223.*")
+        untilBuild.set("231.*")
     }
 
     signPlugin {
